@@ -4,6 +4,9 @@
  * Type of program: My first attempt at a password game.
  *
  * Notes: Working on implementing the high score feature...
+ * 
+ * Trying to make a choice after failure: keep playing or enter
+ * the high score menu.
  * */
 
 #include <stdio.h>
@@ -141,6 +144,10 @@ void character_output_function(int difficulty_level){
 	char program_exit_string8[STRING_LENGTH] = {'E', 'x', 'i', 't','\n','\0'};
 	char program_exit_string9[STRING_LENGTH] = {'E', '\n','\0'};
 	char program_exit_string10[STRING_LENGTH] = {'e', '\n','\0'};
+	char program_exit_string11[STRING_LENGTH] = {'y', '\n','\0'};
+	char program_exit_string12[STRING_LENGTH] = {'Y', '\n','\0'};
+	char program_exit_string13[STRING_LENGTH] = {'y', 'e', 's', '\n','\0'};
+	char program_exit_string14[STRING_LENGTH] = {'Y', 'E', 'S', '\n','\0'};
 
 	level_counter = 1;
 	password_length_easy = 5;
@@ -215,12 +222,14 @@ void character_output_function(int difficulty_level){
 						system("clear");
 						printf("Failure!\n");
 						printf("Please try again\n");
-						/*
-						 * This printf statement will lead into
-						 * the highscore function later.
-						printf("do you want to keep going?(y/n)");
-						*/
-						getchar();
+						printf("do you want to keep going?(y/n)\n");
+						fgets(function_user_inputted_string, STRING_LENGTH, stdin);
+							if(	(strcmp(function_user_inputted_string, program_exit_string11) != 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string12) != 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string13) != 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string14) != 0) ){	
+								high_score_menu();
+							}
 					}
 					else if(exit_value == 0){
 						exit_function();
