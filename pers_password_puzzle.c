@@ -8,8 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <termios.h>        //termios, TCSANOW, ECHO, ICANON
-#include <unistd.h>     	//STDIN_FILENO
+#include <conio.h>
 
 #define STRING_LENGTH 30
 #define MENU_TOP_POSITION 1
@@ -24,20 +23,6 @@ int difficulty_function();
 int main (int argc, char *argv[]){
 
     int menu_selection;
-	static struct termios oldt, newt;
-
-    /*tcgetattr gets the parameters of the current terminal
-    STDIN_FILENO will tell tcgetattr that it should write the settings
-    of stdin to oldt*/
-    tcgetattr( STDIN_FILENO, &oldt);
-    /*now the settings will be copied*/
-    newt = oldt;
-    /*ICANON normally takes care that one line at a time will be processed
-    that means it will return if it sees a "\n" or an EOF or an EOL*/
-    newt.c_lflag &= ~(ICANON);          
-    /*Those new settings will be set to STDIN
-    TCSANOW tells tcsetattr to change attributes immediately. */
-    tcsetattr( STDIN_FILENO, TCSANOW, &newt);
 
 		srand(time(NULL));
 		system("clear");
@@ -45,9 +30,6 @@ int main (int argc, char *argv[]){
 		main_menu_function();
 		menu_selection= difficulty_function();
 		character_output_function(menu_selection);
-
-    /*restore the old settings*/
-    tcsetattr( STDIN_FILENO, TCSANOW, &oldt);
 
 return 0;
 }
@@ -78,7 +60,7 @@ int difficulty_function(){
 	menu_arrow_position = 1;
 	inputted_keyboard_value = 0;
 
-	while(inputted_keyboard_value != 10){
+	while(inputted_keyboard_value != 13){
 
 		system("clear");
 
@@ -91,14 +73,12 @@ int difficulty_function(){
 	 * */
 	printf("\e[?25l");
 
-		system("stty -echo");
-		inputted_keyboard_value = getchar();
-		system("stty echo");
+		inputted_keyboard_value = getch();
 
-		if(inputted_keyboard_value == 65 && menu_arrow_position != MENU_TOP_POSITION){
+		if(inputted_keyboard_value == 80 && menu_arrow_position != MENU_TOP_POSITION){
 			menu_arrow_position--;
 		}
-		else if(inputted_keyboard_value == 66 && menu_arrow_position != MENU_BOTTOM_POSITION){
+		else if(inputted_keyboard_value == 72 && menu_arrow_position != MENU_BOTTOM_POSITION){
 			menu_arrow_position++;
 		}
 		else{
