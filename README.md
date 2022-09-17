@@ -9,3 +9,4 @@ you keep going.
 - pers_password_puzzle.c only has basic functionality thus far.
 - updates for a more "fun" experience are ongoing.
 - windows .exe version is in the works.
+    - The windows_version branch now has a first version of a .exe executable file. Work in progress!
