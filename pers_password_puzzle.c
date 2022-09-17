@@ -1,6 +1,6 @@
 /* Programmer: Per Stoor
  * Date: 2022-08-11
- * Last changed: 2022-09-04
+ * Last changed: 2023-09-17
  * Type of program: My first attempt at a password game.
  *
  * Notes: Working on implementing the high score feature...
@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <termios.h>            //termios, TCSANOW, ECHO, ICANON
+#include <termios.h>        //termios, TCSANOW, ECHO, ICANON
 #include <unistd.h>     	//STDIN_FILENO
 
 #define STRING_LENGTH 30
@@ -25,12 +25,10 @@ void character_output_function(int difficulty_level);
 void exit_function();
 void menu_arrow(int real_postion, int next_postion);
 int difficulty_function();
-int high_score_menu();
-char player_name(char );
 
 int main (int argc, char *argv[]){
 
-	int menu_selection;
+    int menu_selection;
 	static struct termios oldt, newt;
 
     /*tcgetattr gets the parameters of the current terminal
@@ -65,7 +63,7 @@ void main_menu_function(){
 	printf("	 ---------------------\n");
 	printf("	 |Pers Password Puzzle|\n");
 	printf("	 ---------------------\n");
-	printf("	     Version 0.5\n");
+	printf("	     Version 0.6\n");
 
 	printf("\n");
 	printf("Here you will test your skills with a keyboard.\n");
@@ -92,8 +90,7 @@ int difficulty_function(){
 		menu_arrow(1, menu_arrow_position);	printf("1. EASY\n");
 		menu_arrow(2, menu_arrow_position);	printf("2. MEDIUM\n");
 		menu_arrow(3, menu_arrow_position);	printf("3. HARD\n");
-		menu_arrow(4, menu_arrow_position);	printf("4. HIGH SCORE\n");
-							printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+							printf("\n");
 	/*
 	 * This hides the cursor with an ANSI escape sequence
 	 * */
@@ -148,6 +145,11 @@ void character_output_function(int difficulty_level){
 	char program_exit_string12[STRING_LENGTH] = {'Y', '\n','\0'};
 	char program_exit_string13[STRING_LENGTH] = {'y', 'e', 's', '\n','\0'};
 	char program_exit_string14[STRING_LENGTH] = {'Y', 'E', 'S', '\n','\0'};
+	char program_exit_string15[STRING_LENGTH] = {'N', 'o', '\n','\0'};
+	char program_exit_string16[STRING_LENGTH] = {'n', 'o', '\n','\0'};
+	char program_exit_string17[STRING_LENGTH] = {'N', 'O', '\n','\0'};
+	char program_exit_string18[STRING_LENGTH] = {'N', '\n','\0'};
+	char program_exit_string19[STRING_LENGTH] = {'n', '\n','\0'};
 
 	level_counter = 1;
 	password_length_easy = 5;
@@ -166,15 +168,16 @@ void character_output_function(int difficulty_level){
 				printf("\n\n\n\n");	
 
 					for(	function_loop_counter1 = password_length_easy; 
-						function_loop_counter1 > 0;
-						function_loop_counter1--){
+						    function_loop_counter1 > 0;
+						    function_loop_counter1--){
 							printf("-");
 					}
+
 					printf("\n");
 
 					for(	function_loop_counter1 =  0;
-						function_loop_counter1 < password_length_easy;
-						function_loop_counter1++    ){
+						    function_loop_counter1 < password_length_easy;
+						    function_loop_counter1++    ){
 
 						random_password[function_loop_counter1] = 
 						(rand() % (122 - 97) + 97);
@@ -186,8 +189,8 @@ void character_output_function(int difficulty_level){
 					printf("\n");
 
 					for(	function_loop_counter1 = password_length_easy; 
-						function_loop_counter1 > 0;
-						function_loop_counter1--){
+						    function_loop_counter1 > 0;
+						    function_loop_counter1--){
 							printf("-");
 					}
 
@@ -221,14 +224,13 @@ void character_output_function(int difficulty_level){
 					else if(compare_result != 0 && exit_value != 0){
 						system("clear");
 						printf("Failure!\n");
-						printf("Please try again\n");
-						printf("do you want to keep going?(y/n)\n");
+						printf("do you want to keep going?(yes/no)\n");
 						fgets(function_user_inputted_string, STRING_LENGTH, stdin);
-							if(	(strcmp(function_user_inputted_string, program_exit_string11) != 0) ||
-								(strcmp(function_user_inputted_string, program_exit_string12) != 0) ||
-								(strcmp(function_user_inputted_string, program_exit_string13) != 0) ||
-								(strcmp(function_user_inputted_string, program_exit_string14) != 0) ){	
-								high_score_menu();
+							if(	(strcmp(function_user_inputted_string, program_exit_string16)  == 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string17)  == 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string18)  == 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string19)  == 0) ){	
+								exit_function();
 							}
 					}
 					else if(exit_value == 0){
@@ -244,16 +246,16 @@ void character_output_function(int difficulty_level){
 				printf("Write Quit/Exit to terminate.");
 				printf("\n\n\n\n");
 
-					for(	function_loop_counter1 = password_length_easy; 
-						function_loop_counter1 > 0;
-						function_loop_counter1--){
+					for(	function_loop_counter1 = password_length_medium; 
+						    function_loop_counter1 > 0;
+						    function_loop_counter1--){
 							printf("-");
 					}
 					printf("\n");
 
 					for(	function_loop_counter1 =  0;
-						function_loop_counter1 < 10;
-						function_loop_counter1++    ){
+						    function_loop_counter1 < 10;
+						    function_loop_counter1++    ){
 
 						random_password[function_loop_counter1] = 
 						(rand() % (122 - 65) + 65);
@@ -277,9 +279,9 @@ void character_output_function(int difficulty_level){
 
 					printf("\n");
 
-					for(	function_loop_counter1 = password_length_easy; 
-						function_loop_counter1 > 0;
-						function_loop_counter1--){
+					for(	function_loop_counter1 = password_length_medium; 
+						    function_loop_counter1 > 0;
+						    function_loop_counter1--){
 							printf("-");
 					}
 				printf("\n\n\n\n");
@@ -312,13 +314,15 @@ void character_output_function(int difficulty_level){
 					else if(compare_result != 0 && exit_value != 0){
 						system("clear");
 						printf("Failure!\n");
-						printf("Please try again\n");
-						/* This printf statement will lead into
-						 * the high score function later.
-						printf("do you want to keep going?(y/n)");
-						*/
-						getchar();
-					}
+						printf("do you want to keep going?(yes/no)\n");
+						fgets(function_user_inputted_string, STRING_LENGTH, stdin);
+							if(	(strcmp(function_user_inputted_string, program_exit_string16)  == 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string17)  == 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string18)  == 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string19)  == 0) ){	
+								exit_function();
+							}
+                    }
 					else if(exit_value == 0){
 						exit_function();
 					}
@@ -333,16 +337,16 @@ void character_output_function(int difficulty_level){
 				printf("Write Quit/Exit to terminate.");
 				printf("\n\n\n\n");	
 
-					for(	function_loop_counter1 = password_length_easy; 
-						function_loop_counter1 > 0;
-						function_loop_counter1--){
+					for(	function_loop_counter1 = password_length_hard; 
+						    function_loop_counter1 > 0;
+						    function_loop_counter1--){
 							printf("-");
 					}
 					printf("\n");
 
 						for(	function_loop_counter1 =  0;
-						function_loop_counter1 < 15;
-						function_loop_counter1++    ){
+						        function_loop_counter1 < 15;
+						        function_loop_counter1++    ){
 
 						random_password[function_loop_counter1] = 
 						(rand() % (126 - 33) + 33);
@@ -352,9 +356,9 @@ void character_output_function(int difficulty_level){
 					}
 
 					printf("\n");
-					for(	function_loop_counter1 = password_length_easy; 
-						function_loop_counter1 > 0;
-						function_loop_counter1--){
+					for(	function_loop_counter1 = password_length_hard; 
+						    function_loop_counter1 > 0;
+						    function_loop_counter1--){
 							printf("-");
 					}
 
@@ -389,20 +393,18 @@ void character_output_function(int difficulty_level){
 					else if(compare_result != 0 && exit_value != 0){
 						system("clear");
 						printf("Failure!\n");
-						printf("Please try again\n");
-						/* This printf statement will lead into
-						 * the high score function later.
-						printf("do you want to keep going?(y/n)");
-						*/
-						getchar();
-					}
+						printf("do you want to keep going?(yes/no)\n");
+						fgets(function_user_inputted_string, STRING_LENGTH, stdin);
+							if(	(strcmp(function_user_inputted_string, program_exit_string16)  == 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string17)  == 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string18)  == 0) ||
+								(strcmp(function_user_inputted_string, program_exit_string19)  == 0) ){	
+								exit_function();
+							}
+                    }
 					else if(exit_value == 0){
 						exit_function();
 					}
-			}
-			else if(difficulty_level == 4){
-				high_score_menu();
-				difficulty_level = difficulty_function();
 			}
 			else{
 				system("clear");
@@ -453,13 +455,4 @@ void menu_arrow(int real_position, int next_position){
 	else{
 		printf("           ");
 	}
-}
-
-int high_score_menu(){
-
-	system("clear");
-	printf("	HIGH SCORE\n");
-	printf("-----------------------------");
-	printf("\n");
-	getchar();
 }
