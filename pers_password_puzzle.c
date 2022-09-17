@@ -2,11 +2,6 @@
  * Date: 2022-08-11
  * Last changed: 2023-09-17
  * Type of program: My first attempt at a password game.
- *
- * Notes: Working on implementing the high score feature...
- * 
- * Trying to make a choice after failure: keep playing or enter
- * the high score menu.
  * */
 
 #include <stdio.h>
